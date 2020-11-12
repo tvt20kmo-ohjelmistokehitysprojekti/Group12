@@ -2,11 +2,11 @@
 /**
  *
  */
-class Nosta_model extends CI_model
+class Otto_model extends CI_model
 {
   
-  function Nosta_call($add_data){
-    $sql = 'Call Nosto(?,?,@viesti)';
+  function Otto_call($add_data){
+    $sql = 'Call Otto(?,?,@viesti)';
     $query = $this->db->query($sql, $add_data);
     $query = $this->db->query("Select @viesti as viesti");
     $query = $query->result_array();

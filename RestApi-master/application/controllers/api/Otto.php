@@ -7,7 +7,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 
 
-class Nosta extends REST_Controller {
+class Otto extends REST_Controller {
 
     function __construct()
     {
@@ -17,17 +17,17 @@ class Nosta extends REST_Controller {
         // Construct the parent class
         parent::__construct();
 
-        $this->load->model('Nosta_model');
+        $this->load->model('Otto_model');
     }
 
-    public function nosta_post()
+    public function Otto_post()
     {
         
         $add_data=array(
           'Summa'=>$this->post('Summa'),
           'idTili'=>$this->post('idTili')
         );
-        $message=$this->Nosta_model->Nosta_call($add_data);
+        $message=$this->Otto_model->Otto_call($add_data);
                     
         $this->set_response(NULL, REST_Controller::HTTP_OK); 
         echo json_encode($message);
