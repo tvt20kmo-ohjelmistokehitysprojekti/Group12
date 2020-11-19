@@ -1,7 +1,6 @@
 <?php
-/**
- *
- */
+
+
 class User_model extends CI_model
 {
     public function check_login($KorttiID){
@@ -13,15 +12,21 @@ class User_model extends CI_model
 
 
 
-    public function fech_idtili($data){
-
-
-
-
+    public function fetch_accounts($KorttiID){   //OK
+      $sql = 'SELECT idTili,Tyyppi FROM Tili WHERE KorttiID = ?';
+      $query = $this->db->query($sql,$KorttiID);
+      $result = $query->result_array();
+      return $result;
     }
-    function update_user($id, $update_data){ // ei valmis
-      $this->db->where('id_user',$id);
-      $this->db->update('user',$update_data);
+
+
+
+
+    
+    function update_password($update_data){ // ei valmis
+      $sql = 'Update Asiakas SET Tunnusluku=? WHERE KorttiID = ?';
+      $query = $this->db->query($sql,$update_data);
+      
       if($this->db->affected_rows()>0){
         return TRUE;
       }
@@ -30,8 +35,5 @@ class User_model extends CI_model
       }
     }
 
-    public function has_multiple_accounts($data){
-      //palautaa onko vai credit tiliä
-    }
-
+    
 }

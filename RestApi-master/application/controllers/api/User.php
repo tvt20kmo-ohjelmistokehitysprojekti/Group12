@@ -2,21 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-// This can be removed if you use __autoload() in config.php OR use Modular Extensions
-/** @noinspection PhpIncludeInspection */
 require APPPATH . 'libraries/REST_Controller.php';
 
-/**
- * This is an example of a RestApi based on PHP and CodeIgniter 3.
- *
- *
- * @package         CodeIgniter
- * @subpackage      Rest Server
- * @category        Controller
- * @author          Pekka Alaluukas (edited the version made by Phil Sturgeon & Chris Kacerguis)
- * @license         MIT
- * @link            https://github.com/chriskacerguis/codeigniter-restserver
- */
+
 class User extends REST_Controller {
 
     function __construct()
@@ -29,26 +17,20 @@ class User extends REST_Controller {
 
         $this->load->model('User_model');
     }
-    public function user_put() //ei valmis user päivitys
+    public function update_password_post() //ei valmis user päivitys
     {
         // Update the user
-        $id=$this->get('id');
-        $clear_password=$this->post('password');
+        $clear_password=$this->post('Tunnusluku');
         $encrypted_pass = password_hash($clear_password,PASSWORD_DEFAULT);
         $update_data=array(
-          'username'=>$this->post('username'),
-          'password'=>$encrypted_pass
+          'Tunnusluku'=>$encrypted_pass,
+          'KorttiID'=> $this->post('KorttiID')
         );
-        $result=$this->User_model->update_user($id, $update_data);
+        $result=$this->User_model->update_password($update_data);
 
         if($result)
         {
-          $message = [
-              'id_user' => $insert_id,
-              'username' => $this->post('username'),
-              'password' => $this->post('password'),
-              'message' => 'Added a resource'
-          ];
+          $message = 'succes';
 
             $this->set_response($message, REST_Controller::HTTP_CREATED); // CREATED (201) being the HTTP response code
         }
@@ -61,13 +43,25 @@ class User extends REST_Controller {
             ], REST_Controller::HTTP_CONFLICT); // CAN NOT CREATE (409) being the HTTP response code
         }
     }
-    public function has_accounts_post(){
-        //palautaa true jos useampi tili
+    
+    public function fetch_accounts_post(){  //palautaa kaikki korttiid vastaavat tilit tyyppeineen
+        
+        $KorttiID = $this->post('KorttiID');
+
+        if ($KorttiID==NULL){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Reguest'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        else{
+
+        $idaccount_array=$this->User_model->fetch_accounts($KorttiID);
+
+        echo json_encode($idaccount_array); 
+        }
     }
 
-    public function fech_idTili_post(){
-        //palauttaa idTili ottaa vastaan korttiID ja tilin tyypin
-
-    }
+}
     
 
