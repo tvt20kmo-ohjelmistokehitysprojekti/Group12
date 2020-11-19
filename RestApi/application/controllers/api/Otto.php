@@ -27,7 +27,7 @@ class Otto extends REST_Controller {
           'Summa'=>$this->post('Summa'),
           'idTili'=>$this->post('idTili')
         );
-        $message=$this->Otto_model->Otto_call($add_data);
+        $message=$this->Otto_model->Otto_call($add_data);    //palautaa 0 epäonnistuessa & 1 onnistuessa
                     
         $this->set_response(NULL, REST_Controller::HTTP_OK); 
         echo json_encode($message);
