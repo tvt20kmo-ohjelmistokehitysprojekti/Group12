@@ -105,7 +105,6 @@ class Pankki extends REST_Controller {
     public function Fetch_accounts_post(){  //palautaa kaikki korttiid vastaavat tilit tyyppeineen
         
         $KorttiID = $this->post('KorttiID');
-        echo $KorttiID;
 
         if ($KorttiID==NULL){
             $this->response([
