@@ -50,8 +50,9 @@ class Pankki extends REST_Controller {
 
     }
     public function Login_post(){
-        $KorttiID=$this->input->post('KorttiID');
-        $Tunnusluku=$this->input->post('Tunnusluku');       
+        $KorttiID=$this->post('KorttiID');
+        $Tunnusluku=$this->post('Tunnusluku');
+               
         
         if ($KorttiID===NULL || $Tunnusluku ===NULL){
             $this->response([
@@ -104,6 +105,7 @@ class Pankki extends REST_Controller {
     public function Fetch_accounts_post(){  //palautaa kaikki korttiid vastaavat tilit tyyppeineen
         
         $KorttiID = $this->post('KorttiID');
+        echo $KorttiID;
 
         if ($KorttiID==NULL){
             $this->response([
