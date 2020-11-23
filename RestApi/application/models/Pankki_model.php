@@ -46,13 +46,13 @@ class Pankki_model extends CI_model
 
 
 
-    public function fetch_accounts($KorttiID)
+    public function fetch_accounts($add_data)
     {   
-        $sql = 'SELECT idTili,Tyyppi FROM Tili WHERE KorttiID = ?';
-        $query = $this->db->query($sql,$KorttiID);
+        $sql = 'SELECT idTili FROM Tili WHERE KorttiID = ? AND Tyyppi = ?';
+        $query = $this->db->query($sql,$add_data);
         $result = $query->result_array();
-        if (isset($result[0])){
-            return $result;
+        if (isset($result[0]['idTili'])){
+            return $result[0]['idTili'];
         }
         else{
         
@@ -65,7 +65,7 @@ class Pankki_model extends CI_model
 
 
     public function update_password($update_data)
-    { // ei valmis
+    { 
     
         $sql = 'Update Asiakas SET Tunnusluku=? WHERE KorttiID = ?';
         $query = $this->db->query($sql,$update_data);
