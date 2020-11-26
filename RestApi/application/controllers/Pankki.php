@@ -147,4 +147,19 @@ class Pankki extends REST_Controller {
         echo json_encode($idaccount); 
         }
     }
+
+    public function Name_post(){
+        $KorttiID = $this->post('KorttiID');
+
+        if ($KorttiID==NULL){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Reguest'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        else{
+            $name=$this->Pankki_model->name($KorttiID);
+            echo json_encode($name);
+        }    
+    }
 }
