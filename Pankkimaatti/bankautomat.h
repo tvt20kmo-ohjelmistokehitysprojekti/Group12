@@ -2,6 +2,9 @@
 #define BANKAUTOMAT_H
 
 #include <QMainWindow>
+#include <QUrl>
+#include <QtNetwork>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class BankAutomat; }
@@ -15,10 +18,33 @@ public:
     BankAutomat(QWidget *parent = nullptr);
     ~BankAutomat();
 
-private slots:
-    void on_loginBtnKirjaudu_clicked();
+    QNetworkAccessManager* nam = new QNetworkAccessManager(this);
 
-    void on_withdrawBtn100_clicked(bool checked);
+
+
+    QUrl baseUrl;
+
+
+    QString getKorttiID() const;
+    void setKorttiID(const QString &value);
+
+    QString getTiliID() const;
+    void setTiliID(const QString &value);
+
+
+    void CreditDebit(QString);
+
+
+
+public slots:
+    void authRequired(QNetworkReply *aReply,QAuthenticator *aAuthenticator);
+
+
+
+private slots:
+
+
+    void on_loginBtnKirjaudu_clicked();
 
     void on_DebitCreditBtnCredit_clicked();
 
@@ -58,5 +84,11 @@ private slots:
 
 private:
     Ui::BankAutomat *ui;
+
+    QString KorttiID;
+    QString TiliID;
+
+
+
 };
 #endif // BANKAUTOMAT_H

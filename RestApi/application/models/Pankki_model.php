@@ -77,6 +77,19 @@ class Pankki_model extends CI_model
             return FALSE;
         }
     }
+     public function name($KorttiID){
+         $sql = 'Select Nimi, Sukunimi FROM Asiakas WHERE KorttiID = ?';
+         $query = $this->db->query($sql,$KorttiID);
+         $result = $query->result_array();
+
+         if (isset($result[0]['Nimi'])){
+            return $result[0];
+        }
+        else{
+            return FALSE;
+        }
+
+    }
 
 }
 

@@ -35,7 +35,7 @@ class Pankki extends REST_Controller {
 
         $message=$this->Pankki_model->Otto($add_data);    
                      
-        echo json_encode($message);
+        $this->response($message, REST_Controller::HTTP_OK);
         }
     }
     public function Saldo_post() //Hakee post metodilla lähetetyn tilin saldon ja palutaa sen. 
@@ -52,7 +52,7 @@ class Pankki extends REST_Controller {
         else{ 
             $message=$this->Pankki_model->Saldo($idTili);  
 
-            echo json_encode($message);
+            $this->response($message, REST_Controller::HTTP_OK);
         }
 
     }
@@ -144,7 +144,22 @@ class Pankki extends REST_Controller {
 
         $idaccount=$this->Pankki_model->fetch_accounts($add_data);
 
-        echo json_encode($idaccount); 
+        echo ($idaccount); 
         }
+    }
+
+    public function Name_post(){
+        $KorttiID = $this->post('KorttiID');
+
+        if ($KorttiID==NULL){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Reguest'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        else{
+            $name=$this->Pankki_model->name($KorttiID);
+            echo json_encode($name);
+        }    
     }
 }
