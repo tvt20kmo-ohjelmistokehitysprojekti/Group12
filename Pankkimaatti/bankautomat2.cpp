@@ -65,6 +65,8 @@ void BankAutomat::withdraw(QString amount)
 }
 
 
+
+
 void BankAutomat::on_withdrawBtnPaluu_clicked()
 
 {

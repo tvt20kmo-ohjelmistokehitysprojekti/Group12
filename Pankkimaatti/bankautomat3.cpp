@@ -6,7 +6,7 @@
 void BankAutomat::on_ActionBtnSaldo_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->saldopage);
-    QUrl url("http://localhost/Pankkiautomaatti/Group12/RestApi/index.php/Pankki/Saldo");
+    QUrl url("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/Saldo");
 
     QNetworkRequest req(url);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -30,15 +30,9 @@ void BankAutomat::on_ActionBtnSaldo_clicked()
 
    QString resp;
 
-   resp = jsobj["Saldo"].toString()+ "  euroa";
+   resp = jsobj["Saldo"].toString()+ " euroa";
 
    ui->saldoLabelTilinsaldo->setText(resp);
-
-
-
-
-
-   //tulos vielä käsitellä
 }
 
 //Tapahtumat

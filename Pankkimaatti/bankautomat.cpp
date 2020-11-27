@@ -2,6 +2,7 @@
 #include "ui_bankautomat.h"
 #include <QString>
 #include <QtNetwork>
+#include <QDebug>
 
 
 BankAutomat::BankAutomat(QWidget *parent)
@@ -12,12 +13,7 @@ BankAutomat::BankAutomat(QWidget *parent)
 
     connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
 
-    baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/Pankki");
-    //testiä
-    setTiliID("1");
-    ui->stackedWidget->setCurrentWidget(ui->Actionpage);
-
-
+    baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
 }
 
 BankAutomat::~BankAutomat()
@@ -40,55 +36,52 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
     //Asetetaan KorttiID
     setKorttiID(KorttiID);
 
-    //Tehdään Qurl olio
-    QUrl relative("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/Login");
-
-       //Uusi request
-    QNetworkRequest req(relative);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     //Tehdään json tiedoista
     QJsonObject json;
         json.insert("KorttiID",KorttiID);
         json.insert("Tunnusluku",Tunnusluku);
 
-    //lähetetään post metoditlla ja otetaan vastaus
-    QNetworkReply *reply = nam->post(req, QJsonDocument(json).toJson());
+    QByteArray response = getNetworkreply(json,"Login");
 
-    //Odotetaan vastausta
-    while(!reply->isFinished()){
-        qApp->processEvents();
-    }
-
-
-    //Otetaan vastuas talteen
-    QByteArray response = reply->readAll();
-    //Poistetaan reply
-    reply->deleteLater();
+    ui->loginLabelInfo->setText(response);
 
     //Tarkistetaan vastauksen sisältö ja vertailaan
-    /*if(response.compare("true")==0){
-        relative.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/Fetch_account");
-        QNetworkRequest req(relative);
+    if(response.compare("true")==0){
 
-        QJsonObject json;
+        //Katsotaan onko käyttäjällä credit kortti jos ei mennään credit debit valintaan
+        json.insert("Tyyppi","Credit");
+
+        response = getNetworkreply(json,"Fetch_account");
 
 
+        if (response.contains("false")){
 
+            json.insert("Tyyppi","Debit");
+            response = getNetworkreply(json,"Fetch_account");
+
+            if (response.contains("false")){
+                //QDebug<<"Jotain meni väärin";
+            }
+            else{
+            QJsonDocument json_doc = QJsonDocument::fromJson(response);
+            QJsonObject jsobj = json_doc.object();
+
+            QString idTili;
+
+            idTili = jsobj["idTili"].toString();
+            setTiliID(idTili);
+
+            ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+            }
+        }
+        else{
         ui->stackedWidget->setCurrentWidget(ui->DepitCreditPage);
+        }
 
-
-        //kato onko credit ja sen mukaan sitte....
-   // }
-
-
+    }//endif
     else{
-        ui->loginLabelInfo->setText("Kirjautumistiedot eivät kelpaa, yritä uudelleen");
+        ui->loginLabelInfo->setText("Kirjautumistiedot eivät kelpaa, yritä uudeleen");
     }
-
-
-*/
-
 }
 
 
@@ -107,31 +100,28 @@ void BankAutomat::CreditDebit(QString Tyyppi)
 {
     QString KorttiID = getKorttiID();
 
-    QUrl url("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/Fetch_account");
-
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     QJsonObject json;
     json.insert("Tyyppi",Tyyppi);
     json.insert("KorttiID",KorttiID);
 
-    QNetworkReply *reply = nam->post(req,QJsonDocument(json).toJson());
 
+    QByteArray response = getNetworkreply(json,"Fetch_account");
 
-    while(!reply->isFinished()){
-        qApp->processEvents();
+    if (response.contains("false")){
+        //QDebug<<"Jotain meni väärin";
     }
+    else{
 
+    QJsonDocument json_doc = QJsonDocument::fromJson(response);
+    QJsonObject jsobj = json_doc.object();
 
-    //Otetaan vastuas talteen
-    QByteArray response = reply->readAll();
-    //Poistetaan reply
-    reply->deleteLater();
+    QString idTili;
 
-    QString idtili = response;//korjailaan backend vähä...
-    ui->label_4->setText(idtili);
+    idTili = jsobj["idTili"].toString();
+    setTiliID(idTili);
 
+    ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+    }
 
 }
 
@@ -186,4 +176,34 @@ QString BankAutomat::getKorttiID() const
 void BankAutomat::setKorttiID(const QString &value)
 {
     KorttiID = value;
+}
+QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
+{
+    //Funktio auttamaan networkrequestin ja vastauksen hakua. Ottaa vastaan lähetettävän jsonobjectin
+    //ja Url polun joka yhdistetään baseurl. Eli esmim "Otto"
+    //Tehdään Qurl olio
+    QUrl relative = url;
+    //Yhdistetään polku base urliin
+    QUrl urli = baseUrl.resolved(relative);
+
+    //Uusi request
+    QNetworkRequest request(baseUrl.resolved(relative));
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    //lähetetään post metoditlla ja otetaan vastaus
+    QNetworkReply *reply = nam->post(request,QJsonDocument(json).toJson());
+
+    //Odotetaan vastausta
+    while(!reply->isFinished()){
+        qApp->processEvents();
+    }
+    //Otetaan vastuas talteen
+    QByteArray result = reply->readAll();
+
+    //Poistetaan reply
+    reply->deleteLater();
+
+    //Palautetaan result
+
+    return result;
 }

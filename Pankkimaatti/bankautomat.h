@@ -37,6 +37,9 @@ public:
 
 
     void withdraw(QString amount);
+
+    QByteArray getNetworkreply(QJsonObject, QString);
+
 public slots:
     void authRequired(QNetworkReply *aReply,QAuthenticator *aAuthenticator);
 
