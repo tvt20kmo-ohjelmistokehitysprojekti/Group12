@@ -156,7 +156,7 @@ void BankAutomat::on_saldoBtnPalaa_clicked()
 
 
 
-}
+
 //Muut
 QString BankAutomat::getTiliID() const
 {
