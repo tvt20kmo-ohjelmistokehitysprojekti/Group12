@@ -13,6 +13,9 @@ BankAutomat::BankAutomat(QWidget *parent)
     connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/Pankki");
+    //testiä
+    setTiliID("1");
+    ui->stackedWidget->setCurrentWidget(ui->Actionpage);
 
 
 }
@@ -64,7 +67,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
     reply->deleteLater();
 
     //Tarkistetaan vastauksen sisältö ja vertailaan
-    if(response.compare("true")==0){
+    /*if(response.compare("true")==0){
         relative.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/Fetch_account");
         QNetworkRequest req(relative);
 
@@ -76,7 +79,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
 
 
         //kato onko credit ja sen mukaan sitte....
-    }
+   // }
 
 
     else{
@@ -84,7 +87,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
     }
 
 
-
+*/
 
 }
 
