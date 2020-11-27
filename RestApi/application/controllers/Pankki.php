@@ -19,13 +19,13 @@ class Pankki extends REST_Controller {
         $this->load->model('Pankki_model');
     }
     public function Otto_post() //Ottaa tililtä rahaa post metodista summan ja tilin numeron mukaan.
-    // Palauttta 1 onnistuessa ja 0 epäonnistuessa
+    // Palauttta 1 onnistuessa ja 0 epäonnistuessa viesti : 0 tai 1
     {
         $add_data=array(
           'Summa'=>$this->post('Summa'),
           'idTili'=>$this->post('idTili')
         );
-        if ($add_data==NULL){
+        if ($add_data["Summa"]==NULL || $add_data["idTili"]==NULL){
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Reguest'
@@ -33,45 +33,41 @@ class Pankki extends REST_Controller {
         }
         else{
 
-        $message=$this->Pankki_model->Otto($add_data);    
-                     
+        $message=$this->Pankki_model->Otto($add_data); 
+       
+                    
         $this->response($message, REST_Controller::HTTP_OK);
         }
     }
-    public function Saldo_post() //Hakee post metodilla lähetetyn tilin saldon ja palutaa sen. 
-    //Palautaa 0 jos saldoa ei löydy, 
+    
+    public function Saldo_post() //Hakee post metodilla lähetetyn tilin saldon ja palutaa sen.  
     {
         $idTili = $this->post('idTili');
 
-        if ($idTili==NULL){
+        $message=$this->Pankki_model->Saldo($idTili);  
+        if(!$message){
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Reguest'
-            ], REST_Controller::HTTP_BAD_REQUEST);
+                ], REST_Controller::HTTP_BAD_REQUEST);
         }
-        else{ 
-            $message=$this->Pankki_model->Saldo($idTili);  
-
+        else{
             $this->response($message, REST_Controller::HTTP_OK);
         }
-
     }
     public function Tapahtumat_post()   //Hakee post metodilla lähetetyn tilin tapahtumat ja palutaa kuusi(6) viimeistä 
-    {   //Palautaa 0 jos tapahtumia ei löydy.
-        $idTili = $this->post('idTili');
-
-        if ($idTili==NULL){
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Reguest'
-            ], REST_Controller::HTTP_BAD_REQUEST);
-        }
-        else{ 
+    { 
+        $idTili = $this->post('idTili'); 
             $message=$this->Pankki_model->Tapahtumat($idTili);
-
-        echo json_encode($message);
-        }
-
+            if(!$message){
+                $this->response([
+                    'status' => FALSE,
+                    'message' => 'Bad Reguest'
+                ], REST_Controller::HTTP_BAD_REQUEST);
+            }
+            else{
+            $this->response($message, REST_Controller::HTTP_OK);
+            }
     }
     public function Login_post(){ //Tarkistaa löytyykö tietokanssata post metodilla lähetettyä Kortti Tunnusluku yhdistelmää
         //Palautaa true onnistuessa ja false epäonnistuessa.
@@ -95,7 +91,7 @@ class Pankki extends REST_Controller {
             else{
             $result = FALSE;
             }
-            echo json_encode($result);
+            $this->response($result, REST_Controller::HTTP_OK);
         }
 
     }
@@ -127,39 +123,40 @@ class Pankki extends REST_Controller {
         }
     }
     
-    public function Fetch_account_post(){  //palautaa post metodilla lähetetyn kortti idn ja tyyppiä vastaavan tilinumeron. 
-        //Palautaa 0 epäonnistuessa.
-        
+    public function Fetch_account_post()
+    {  //palautaa post metodilla lähetetyn kortti idn ja tyyppiä vastaavan tilinumeron. 
+
         $add_data=array(
         'KorttiID' => $this->post('KorttiID'),
         'Tyyppi' => $this->post('Tyyppi')
         );
-        if ($add_data==NULL){
-            $this->response([
-                'status' => FALSE,
-                'message' => 'Bad Reguest'
-            ], REST_Controller::HTTP_BAD_REQUEST);
-        }
-        else{
-
         $idaccount=$this->Pankki_model->fetch_accounts($add_data);
 
-        echo ($idaccount); 
-        }
-    }
-
-    public function Name_post(){
-        $KorttiID = $this->post('KorttiID');
-
-        if ($KorttiID==NULL){
+        if(!$idaccount){
             $this->response([
                 'status' => FALSE,
                 'message' => 'Bad Reguest'
             ], REST_Controller::HTTP_BAD_REQUEST);
         }
         else{
-            $name=$this->Pankki_model->name($KorttiID);
-            echo json_encode($name);
-        }    
+        $this->response($idaccount, REST_Controller::HTTP_OK);
+        }
+        
+    }
+
+    public function Name_post(){ //Hakee asikastaulusta etunimen ja sukunimen
+        $KorttiID = $this->post('KorttiID');
+
+        $name=$this->Pankki_model->name($KorttiID);
+        if(!$name){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Reguest'
+            ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        else{
+        $this->response($name, REST_Controller::HTTP_OK);
+        }
     }
 }
+
