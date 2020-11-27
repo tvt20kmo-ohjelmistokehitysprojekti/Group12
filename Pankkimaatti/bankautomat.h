@@ -36,6 +36,7 @@ public:
 
 
 
+    void withdraw(QString amount);
 public slots:
     void authRequired(QNetworkReply *aReply,QAuthenticator *aAuthenticator);
 
