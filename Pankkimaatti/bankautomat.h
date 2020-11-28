@@ -37,6 +37,8 @@ public:
     void clearInfo();
 
 
+    void setLineEditValidation();
+
 public slots:
     void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);
 

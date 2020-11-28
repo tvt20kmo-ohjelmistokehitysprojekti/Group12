@@ -3,6 +3,7 @@
 #include <QString>
 #include <QtNetwork>
 #include <QDebug>
+#include <QIntValidator>
 
 
 BankAutomat::BankAutomat(QWidget *parent)
@@ -14,6 +15,9 @@ BankAutomat::BankAutomat(QWidget *parent)
     connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
+    this->setLineEditValidation();
+
+
 }
 
 BankAutomat::~BankAutomat()
@@ -202,4 +206,11 @@ void BankAutomat::clearInfo()
     ui->loginlineEditKorttiID->clear();
     ui->loginlineEditTunnusluku->clear();
     ui->loginLabelInfo->clear();
+}
+
+void BankAutomat::setLineEditValidation(){
+    QIntValidator* validator = new QIntValidator(0,9999,this);
+    ui->loginlineEditKorttiID->setValidator(validator);
+    ui->loginlineEditTunnusluku->setValidator(validator);
+    ui->withdrawlineEditAmount->setValidator(validator);
 }
