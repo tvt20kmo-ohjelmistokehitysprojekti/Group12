@@ -18,58 +18,52 @@ BankAutomat::BankAutomat(QWidget *parent)
 
 BankAutomat::~BankAutomat()
 {
+    delete nam;
     delete ui;
-
 }
 
 
 // Login
 void BankAutomat::on_loginBtnKirjaudu_clicked()
 {
-
+    ui->loginLabelInfo->setText("Kirjaudutaan..."); //Odotus viesti
     //Haetaan KorttiID, Tunnusluku käyttöliittymästä
     QString KorttiID, Tunnusluku;
 
     KorttiID = ui->loginlineEditKorttiID->text();
     Tunnusluku = ui->loginlineEditTunnusluku->text();
 
-    //Asetetaan KorttiID
-    setKorttiID(KorttiID);
-
     //Tehdään json tiedoista
     QJsonObject json;
         json.insert("KorttiID",KorttiID);
         json.insert("Tunnusluku",Tunnusluku);
 
-    QByteArray response = getNetworkreply(json,"Login");
-
-    ui->loginLabelInfo->setText(response);
+    QByteArray response = this->getNetworkreply(json,"Login");
 
     //Tarkistetaan vastauksen sisältö ja vertailaan
     if(response.compare("true")==0){
 
-        //Katsotaan onko käyttäjällä credit kortti jos ei mennään credit debit valintaan
+        //Asetetaan KorttiID
+        setKorttiID(KorttiID);
+
+        //Katsotaan onko käyttäjällä credit kortti jos on mennään credit debit valintaan muuten action valikkoon
         json.insert("Tyyppi","Credit");
 
-        response = getNetworkreply(json,"Fetch_account");
-
+        response = this->getNetworkreply(json,"Fetch_account");
 
         if (response.contains("false")){
 
             json.insert("Tyyppi","Debit");
-            response = getNetworkreply(json,"Fetch_account");
+            response = this->getNetworkreply(json,"Fetch_account");
 
             if (response.contains("false")){
-                //QDebug<<"Jotain meni väärin";
+                qDebug("Jotain meni väärin");
             }
             else{
             QJsonDocument json_doc = QJsonDocument::fromJson(response);
             QJsonObject jsobj = json_doc.object();
 
-            QString idTili;
-
-            idTili = jsobj["idTili"].toString();
-            setTiliID(idTili);
+            this->setTiliID(jsobj["idTili"].toString());
 
             ui->stackedWidget->setCurrentWidget(ui->Actionpage);
             }
@@ -80,7 +74,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
 
     }//endif
     else{
-        ui->loginLabelInfo->setText("Kirjautumistiedot eivät kelpaa, yritä uudeleen");
+        ui->loginLabelInfo->setText("Kirjautumistiedot eivät kelpaa, yritä uudelleen");
     }
 }
 
@@ -98,27 +92,23 @@ void BankAutomat::on_DebitCreditBtnDebit_clicked()
 
 void BankAutomat::CreditDebit(QString Tyyppi)
 {
-    QString KorttiID = getKorttiID();
+    QString KorttiID = this->getKorttiID();
 
     QJsonObject json;
     json.insert("Tyyppi",Tyyppi);
     json.insert("KorttiID",KorttiID);
 
-
-    QByteArray response = getNetworkreply(json,"Fetch_account");
+    QByteArray response = this->getNetworkreply(json,"Fetch_account");
 
     if (response.contains("false")){
-        //QDebug<<"Jotain meni väärin";
+        qDebug() <<"Jotain meni väärin";
     }
     else{
 
     QJsonDocument json_doc = QJsonDocument::fromJson(response);
     QJsonObject jsobj = json_doc.object();
 
-    QString idTili;
-
-    idTili = jsobj["idTili"].toString();
-    setTiliID(idTili);
+    this->setTiliID(jsobj["idTili"].toString());
 
     ui->stackedWidget->setCurrentWidget(ui->Actionpage);
     }
@@ -134,21 +124,22 @@ void BankAutomat::on_ActionBtnOtto_clicked()
 
 
 
-//Saldo
+//Paluut ja lopetat
+void BankAutomat::on_TransactionBtnLopeta_clicked()
+{
+}
 void BankAutomat::on_saldoBtnLopeta_clicked()
 {
-
 }
-
 void BankAutomat::on_saldoBtnPalaa_clicked()
 {
-
 }
-
-
-
-
-
+void BankAutomat::on_withdrawBtnPaluu_clicked()
+{
+}
+void BankAutomat::on_TransactionBtnPalaa_clicked()
+{
+}
 
 //Muut
 QString BankAutomat::getTiliID() const
@@ -161,11 +152,11 @@ void BankAutomat::setTiliID(const QString &value)
     TiliID = value;
 }
 
-void BankAutomat::authRequired(QNetworkReply *aReply, QAuthenticator *aAuthenticator)
+void BankAutomat::authRequired(QNetworkReply *Reply, QAuthenticator *Authenticator)
 {
-
-   aAuthenticator->setUser("Group");
-   aAuthenticator->setPassword("1212");
+    qDebug() << Reply->readAll();
+   Authenticator->setUser("Group");
+   Authenticator->setPassword("1212");
 }
 
 QString BankAutomat::getKorttiID() const
@@ -184,7 +175,7 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
     //Tehdään Qurl olio
     QUrl relative = url;
     //Yhdistetään polku base urliin
-    QUrl urli = baseUrl.resolved(relative);
+    QUrl urli = this->baseUrl.resolved(relative);
 
     //Uusi request
     QNetworkRequest request(baseUrl.resolved(relative));

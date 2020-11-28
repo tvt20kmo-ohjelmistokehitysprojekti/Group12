@@ -65,12 +65,4 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
 
 }
 
-void BankAutomat::on_TransactionBtnLopeta_clicked()
-{
 
-}
-
-void BankAutomat::on_TransactionBtnPalaa_clicked()
-{
-
-}

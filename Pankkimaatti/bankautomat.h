@@ -20,10 +20,7 @@ public:
 
     QNetworkAccessManager* nam = new QNetworkAccessManager(this);
 
-
-
     QUrl baseUrl;
-
 
     QString getKorttiID() const;
     void setKorttiID(const QString &value);
@@ -31,19 +28,15 @@ public:
     QString getTiliID() const;
     void setTiliID(const QString &value);
 
-
     void CreditDebit(QString);
-
-
 
     void withdraw(QString amount);
 
     QByteArray getNetworkreply(QJsonObject, QString);
 
+
 public slots:
-    void authRequired(QNetworkReply *aReply,QAuthenticator *aAuthenticator);
-
-
+    void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);
 
 private slots:
 
