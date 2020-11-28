@@ -34,6 +34,8 @@ public:
 
     QByteArray getNetworkreply(QJsonObject, QString);
 
+    void clearInfo();
+
 
 public slots:
     void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);

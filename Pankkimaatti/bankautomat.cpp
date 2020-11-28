@@ -22,7 +22,6 @@ BankAutomat::~BankAutomat()
     delete ui;
 }
 
-
 // Login
 void BankAutomat::on_loginBtnKirjaudu_clicked()
 {
@@ -60,16 +59,16 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
                 qDebug("Jotain meni väärin");
             }
             else{
-            QJsonDocument json_doc = QJsonDocument::fromJson(response);
-            QJsonObject jsobj = json_doc.object();
+                QJsonDocument json_doc = QJsonDocument::fromJson(response);
+                QJsonObject jsobj = json_doc.object();
 
-            this->setTiliID(jsobj["idTili"].toString());
+                this->setTiliID(jsobj["idTili"].toString());
 
-            ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+                ui->stackedWidget->setCurrentWidget(ui->Actionpage);
             }
         }
         else{
-        ui->stackedWidget->setCurrentWidget(ui->DepitCreditPage);
+            ui->stackedWidget->setCurrentWidget(ui->DepitCreditPage);
         }
 
     }//endif
@@ -77,7 +76,6 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
         ui->loginLabelInfo->setText("Kirjautumistiedot eivät kelpaa, yritä uudelleen");
     }
 }
-
 
 //Credit / Debit
 void BankAutomat::on_DebitCreditBtnCredit_clicked()
@@ -104,15 +102,13 @@ void BankAutomat::CreditDebit(QString Tyyppi)
         qDebug() <<"Jotain meni väärin";
     }
     else{
+        QJsonDocument json_doc = QJsonDocument::fromJson(response);
+        QJsonObject jsobj = json_doc.object();
 
-    QJsonDocument json_doc = QJsonDocument::fromJson(response);
-    QJsonObject jsobj = json_doc.object();
+        this->setTiliID(jsobj["idTili"].toString());
 
-    this->setTiliID(jsobj["idTili"].toString());
-
-    ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+        ui->stackedWidget->setCurrentWidget(ui->Actionpage);
     }
-
 }
 
 
@@ -122,23 +118,23 @@ void BankAutomat::on_ActionBtnOtto_clicked()
     ui->stackedWidget->setCurrentWidget(ui->withdrawpage);
 }
 
-
-
 //Paluut ja lopetat
 void BankAutomat::on_TransactionBtnLopeta_clicked()
-{
+{   ui->stackedWidget->setCurrentWidget(ui->loginPage);
+    clearInfo();
 }
 void BankAutomat::on_saldoBtnLopeta_clicked()
-{
+{   ui->stackedWidget->setCurrentWidget(ui->loginPage);
+    clearInfo();
 }
 void BankAutomat::on_saldoBtnPalaa_clicked()
-{
+{   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
 }
 void BankAutomat::on_withdrawBtnPaluu_clicked()
-{
+{   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
 }
 void BankAutomat::on_TransactionBtnPalaa_clicked()
-{
+{   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
 }
 
 //Muut
@@ -197,4 +193,13 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
     //Palautetaan result
 
     return result;
+}
+
+void BankAutomat::clearInfo()
+{
+    this->setKorttiID("0");
+    this->setTiliID("0");
+    ui->loginlineEditKorttiID->clear();
+    ui->loginlineEditTunnusluku->clear();
+    ui->loginLabelInfo->clear();
 }
