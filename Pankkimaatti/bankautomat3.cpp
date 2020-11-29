@@ -25,7 +25,14 @@ void BankAutomat::on_ActionBtnSaldo_clicked()
 
    reply->deleteLater();
 
-   //tulos vielä käsitellä
+   QJsonDocument json_doc = QJsonDocument::fromJson(response);
+   QJsonObject jsobj = json_doc.object();
+
+   QString resp;
+
+   resp = jsobj["Saldo"].toString()+ " euroa";
+
+   ui->saldoLabelTilinsaldo->setText(resp);
 }
 
 //Tapahtumat
@@ -58,12 +65,4 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
 
 }
 
-void BankAutomat::on_TransactionBtnLopeta_clicked()
-{
 
-}
-
-void BankAutomat::on_TransactionBtnPalaa_clicked()
-{
-
-}

@@ -8,21 +8,22 @@ class Pankki_model extends CI_model
         $this->db->query($sql, $add_data);
         $query = $this->db->query("Select @viesti as viesti");
         $result = $query->result_array();
-        return $result[0]['viesti'];
+        return $result[0];
     }
 
     public function Saldo($idTili)
     {
-            $sql = 'select Saldo from tili where idTili=?';
-            $query = $this->db->query($sql,$idTili);
-            $result = $query->result_array();
-            if (isset( $result[0]['Saldo'])){
-              return $result[0]['Saldo'];
-            }
-            else {
-                return 0;
-            }
+        $sql = 'select Saldo from Tili where idTili=?';
+        $query = $this->db->query($sql,$idTili);
+        $result = $query->result_array();
+        if (isset( $result[0]['Saldo'])){
+            return $result[0];
+        }
+        else {
+            return false;
+        }
     }
+
     public function Tapahtumat($idTili)
     {
         $sql = 'select Pvm, Selite, Summa from Tapahtumat where idTili =? order by Pvm desc limit 6';
@@ -33,10 +34,10 @@ class Pankki_model extends CI_model
         }
         else{
         
-            return 0;
+            return false;
         }
-
     }
+
     public function check_login($KorttiID){
         $this->db->select('Tunnusluku');
         $this->db->from('Asiakas');
@@ -44,25 +45,19 @@ class Pankki_model extends CI_model
         return $this->db->get()->row('Tunnusluku');
     }
 
-
-
     public function fetch_accounts($add_data)
     {   
         $sql = 'SELECT idTili FROM Tili WHERE KorttiID = ? AND Tyyppi = ?';
         $query = $this->db->query($sql,$add_data);
         $result = $query->result_array();
         if (isset($result[0]['idTili'])){
-            return $result[0]['idTili'];
+            return $result[0];
         }
         else{
         
-            return 0;
+            return false;
         }
     }
-
-
-
-
 
     public function update_password($update_data)
     { 
@@ -77,18 +72,18 @@ class Pankki_model extends CI_model
             return FALSE;
         }
     }
-     public function name($KorttiID){
+
+    public function name($KorttiID){
          $sql = 'Select Nimi, Sukunimi FROM Asiakas WHERE KorttiID = ?';
          $query = $this->db->query($sql,$KorttiID);
          $result = $query->result_array();
 
-         if (isset($result[0]['Nimi'])){
+         if (isset($result[0])){
             return $result[0];
         }
         else{
             return FALSE;
         }
-
     }
 
 }
