@@ -44,7 +44,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
     QByteArray response = this->getNetworkreply(json,"Login");
 
     //Tarkistetaan vastauksen sisältö ja vertailaan
-    if(response.compare("true")==0){
+    if(response.contains("true")){
 
         //Asetetaan KorttiID
         setKorttiID(KorttiID);

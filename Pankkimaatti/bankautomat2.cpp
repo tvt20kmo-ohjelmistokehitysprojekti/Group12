@@ -61,21 +61,16 @@ void BankAutomat::withdraw(QString amount)
 
         //myöhemmin tehdään vastauksen käsittely
 
+        if (response.contains("1")){
+                ui->stackedWidget->setCurrentWidget(ui->Endingpage);    }//Tässä otto menee läpi//
+
+
+
+                else {
+                ui->withdrawLabelInfo->setText("Tilillä ei katetta");
+}
+
+
 
 }
 
-//Kuitti ei kiitos ikkuna
-void BankAutomat::on_intakeinfoBtnEi_clicked()
-{
-
-}
-
-void BankAutomat::on_intakeinfoBtnKuitille_clicked()
-{
-
-}
-
-void BankAutomat::on_intakeinfoBtnNaytto_clicked()
-{
-
-}

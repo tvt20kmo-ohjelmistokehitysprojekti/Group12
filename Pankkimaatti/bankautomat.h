@@ -57,12 +57,6 @@ private slots:
 
     void on_ActionBtnTapahtumat_clicked();
 
-    void on_intakeinfoBtnEi_clicked();
-
-    void on_intakeinfoBtnKuitille_clicked();
-
-    void on_intakeinfoBtnNaytto_clicked();
-
     void on_saldoBtnLopeta_clicked();
 
     void on_saldoBtnPalaa_clicked();
