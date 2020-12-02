@@ -5,6 +5,15 @@
 
 
 //Otto
+void BankAutomat::on_withdrawBtnOther_clicked(bool checked)
+{
+    if(checked){
+        ui->frame->show();
+    }
+    else
+        ui->frame->hide();
+}
+
 void BankAutomat::on_withdrawBtn100_clicked()
 {
     withdraw("100");
@@ -28,7 +37,12 @@ void BankAutomat::on_withdrawBtn50_clicked()
 void BankAutomat::on_withdrawBtnOk_clicked()
 {
     QString amount = ui->withdrawlineEditAmount->text();
-    withdraw(amount);
+    if(checkSum(amount)){
+        withdraw(amount);
+    }
+    else{
+            ui->withdrawLabelInfo->setText("Summa ei kelvollinen\nNostettavan summan pitää\n olla jaollinen 20 eurolla");
+        }
 
 }
 
@@ -73,4 +87,14 @@ void BankAutomat::withdraw(QString amount)
 
 
 }
+
+bool BankAutomat::checkSum(QString sum){
+        return !(sum.toInt()%20); //true jos summa jaollinen 20
+}
+
+void BankAutomat::printMoney(QString sum)
+{
+//to-do
+}
+
 

@@ -16,6 +16,8 @@ BankAutomat::BankAutomat(QWidget *parent)
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
     this->setLineEditValidation();
+    ui->frame->hide();
+    ui->withdrawBtnOther->setCheckable("True");
 
 
 }
@@ -214,3 +216,7 @@ void BankAutomat::setLineEditValidation(){
     ui->loginlineEditTunnusluku->setValidator(validator);
     ui->withdrawlineEditAmount->setValidator(validator);
 }
+
+
+
+
