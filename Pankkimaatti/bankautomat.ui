@@ -70,9 +70,9 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>170</x>
         <y>220</y>
-        <width>71</width>
+        <width>131</width>
         <height>21</height>
        </rect>
       </property>
@@ -85,7 +85,7 @@ background-color:rgb(0, 0, 255);
        <rect>
         <x>310</x>
         <y>100</y>
-        <width>221</width>
+        <width>331</width>
         <height>71</height>
        </rect>
       </property>
@@ -125,9 +125,9 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_3">
       <property name="geometry">
        <rect>
-        <x>190</x>
+        <x>170</x>
         <y>270</y>
-        <width>111</width>
+        <width>131</width>
         <height>31</height>
        </rect>
       </property>
@@ -151,10 +151,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>40</y>
-        <width>191</width>
-        <height>61</height>
+        <x>20</x>
+        <y>30</y>
+        <width>301</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -171,7 +171,7 @@ background-color:rgb(0, 0, 255);
        <rect>
         <x>360</x>
         <y>170</y>
-        <width>151</width>
+        <width>191</width>
         <height>41</height>
        </rect>
       </property>
@@ -214,10 +214,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>580</x>
+        <x>20</x>
         <y>40</y>
-        <width>211</width>
-        <height>41</height>
+        <width>301</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -232,8 +232,8 @@ background-color:rgb(0, 0, 255);
      <widget class="QPushButton" name="ActionBtnOtto">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>180</y>
+        <x>320</x>
+        <y>170</y>
         <width>141</width>
         <height>41</height>
        </rect>
@@ -248,8 +248,8 @@ background-color:rgb(0, 0, 255);
      <widget class="QPushButton" name="ActionBtnSaldo">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>250</y>
+        <x>320</x>
+        <y>240</y>
         <width>141</width>
         <height>41</height>
        </rect>
@@ -264,8 +264,8 @@ background-color:rgb(0, 0, 255);
      <widget class="QPushButton" name="ActionBtnTapahtumat">
       <property name="geometry">
        <rect>
-        <x>110</x>
-        <y>320</y>
+        <x>320</x>
+        <y>310</y>
         <width>141</width>
         <height>41</height>
        </rect>
@@ -280,10 +280,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>140</x>
-        <y>90</y>
-        <width>131</width>
-        <height>31</height>
+        <x>340</x>
+        <y>100</y>
+        <width>191</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -293,10 +293,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_14">
       <property name="geometry">
        <rect>
-        <x>560</x>
+        <x>20</x>
         <y>40</y>
-        <width>221</width>
-        <height>51</height>
+        <width>311</width>
+        <height>71</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -361,7 +361,7 @@ background-color:rgb(0, 0, 255);
        <rect>
         <x>270</x>
         <y>160</y>
-        <width>251</width>
+        <width>311</width>
         <height>81</height>
        </rect>
       </property>
@@ -372,10 +372,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>580</x>
+        <x>20</x>
         <y>40</y>
-        <width>201</width>
-        <height>51</height>
+        <width>321</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -391,9 +391,9 @@ background-color:rgb(0, 0, 255);
       <property name="geometry">
        <rect>
         <x>300</x>
-        <y>140</y>
-        <width>191</width>
-        <height>31</height>
+        <y>130</y>
+        <width>271</width>
+        <height>51</height>
        </rect>
       </property>
       <property name="text">
@@ -403,10 +403,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_8">
       <property name="geometry">
        <rect>
-        <x>280</x>
+        <x>230</x>
         <y>230</y>
-        <width>81</width>
-        <height>21</height>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -432,10 +432,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="saldoLabelTilinsaldo">
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>410</x>
         <y>230</y>
-        <width>131</width>
-        <height>21</height>
+        <width>151</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -461,10 +461,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_16">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>40</y>
-        <width>201</width>
-        <height>41</height>
+        <x>20</x>
+        <y>30</y>
+        <width>331</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -553,10 +553,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_10">
       <property name="geometry">
        <rect>
-        <x>600</x>
-        <y>300</y>
-        <width>121</width>
-        <height>31</height>
+        <x>590</x>
+        <y>290</y>
+        <width>201</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="text">
@@ -600,7 +600,7 @@ background-color:rgb(0, 0, 255);
        <rect>
         <x>350</x>
         <y>110</y>
-        <width>61</width>
+        <width>121</width>
         <height>41</height>
        </rect>
       </property>
@@ -611,10 +611,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>580</x>
-        <y>40</y>
-        <width>191</width>
-        <height>41</height>
+        <x>10</x>
+        <y>30</y>
+        <width>291</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -629,10 +629,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>300</x>
-        <y>160</y>
-        <width>211</width>
-        <height>51</height>
+        <x>260</x>
+        <y>130</y>
+        <width>341</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="text">
@@ -643,13 +643,13 @@ background-color:rgb(0, 0, 255);
       <property name="geometry">
        <rect>
         <x>100</x>
-        <y>210</y>
-        <width>591</width>
-        <height>151</height>
+        <y>230</y>
+        <width>181</width>
+        <height>141</height>
        </rect>
       </property>
       <property name="text">
-       <string/>
+       <string>01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="TransactionBtnLopeta">
@@ -687,10 +687,10 @@ background-color:rgb(0, 0, 255);
      <widget class="QLabel" name="label_18">
       <property name="geometry">
        <rect>
-        <x>590</x>
-        <y>40</y>
-        <width>191</width>
-        <height>41</height>
+        <x>20</x>
+        <y>30</y>
+        <width>291</width>
+        <height>81</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -698,6 +698,35 @@ background-color:rgb(0, 0, 255);
       </property>
       <property name="text">
        <string>&lt;h1&gt;OttoMaatti&lt;/h1&gt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="transactionLabelTransaction_2">
+      <property name="geometry">
+       <rect>
+        <x>500</x>
+        <y>230</y>
+        <width>181</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>90 euroa&lt;br&gt;90 euroa&lt;br&gt;90 euroa&lt;br&gt;90 euroa&lt;br&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="transactionLabelTransaction_3">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>230</y>
+        <width>181</width>
+        <height>141</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Pano&lt;br&gt;Pano&lt;br&gt;Pano&lt;br&gt;Pano&lt;br&gt;</string>
       </property>
      </widget>
     </widget>
