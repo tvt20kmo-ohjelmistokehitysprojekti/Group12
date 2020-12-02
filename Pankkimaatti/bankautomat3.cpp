@@ -61,7 +61,27 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
 
    reply->deleteLater();
 
-   ui->transactionLabelTransaction->setText(response);
+   QJsonDocument json_doc = QJsonDocument::fromJson(response);
+           QJsonObject jsobj = json_doc.object();
+           QJsonArray jsarr = json_doc.array();
+
+           QString date, transact, sum;
+
+          foreach (const QJsonValue &value, jsarr) {
+                     QJsonObject jsob = value.toObject();
+
+                     date+=jsob["Pvm"].toString()+"\n";
+                     transact+=jsob["Selite"].toString()+"\n";
+                     sum+=jsob["Summa"].toString()+"\n";
+
+
+           }
+
+
+
+           ui->transactionLabelDate->setText(date);
+           ui->transactionLabelTransact->setText(transact);
+           ui->transactionLabelSum->setText(sum);
 
 }
 
