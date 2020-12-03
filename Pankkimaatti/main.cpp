@@ -1,4 +1,5 @@
 #include "bankautomat.h"
+#include "moneywndow.h"
 
 #include <QApplication>
 

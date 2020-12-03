@@ -15,7 +15,7 @@ BankAutomat::BankAutomat(QWidget *parent)
     connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
-    this->setLineEditValidation();
+    //this->setLineEditValidation();
     ui->frame->hide();
     ui->withdrawBtnOther->setCheckable("True");
 
@@ -126,8 +126,7 @@ void BankAutomat::on_ActionBtnOtto_clicked()
 
 //Paluut ja lopetat
 void BankAutomat::on_TransactionBtnLopeta_clicked()
-{   ui->stackedWidget->setCurrentWidget(ui->loginPage);
-    clearInfo();
+{   gotologin();
 }
 void BankAutomat::on_saldoBtnLopeta_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->loginPage);
@@ -220,3 +219,13 @@ void BankAutomat::setLineEditValidation(){
 
 
 
+
+void BankAutomat::on_saldoBtnLopeta_3_clicked()
+{
+    gotologin();
+}
+
+void BankAutomat::on_saldoBtnLopeta_2_clicked()
+{
+  gotologin();
+}

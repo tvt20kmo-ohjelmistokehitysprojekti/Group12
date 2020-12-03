@@ -2,6 +2,8 @@
 #include "ui_bankautomat.h"
 #include <QString>
 #include <QtNetwork>
+#include "moneywndow.h"
+
 
 
 //Otto
@@ -37,11 +39,11 @@ void BankAutomat::on_withdrawBtn50_clicked()
 void BankAutomat::on_withdrawBtnOk_clicked()
 {
     QString amount = ui->withdrawlineEditAmount->text();
-    if(checkSum(amount)){
+    if(!(amount.toInt()%20) || !((amount.toInt()%50)%20)){
         withdraw(amount);
     }
     else{
-            ui->withdrawLabelInfo->setText("Summa ei kelvollinen\nNostettavan summan pitää\n olla jaollinen 20 eurolla");
+            ui->withdrawLabelInfo->setText("Summa ei kelvollinen\nAutomaatista nostettavissa\n 100,50,20 euron setelit");
         }
 
 }
@@ -75,26 +77,23 @@ void BankAutomat::withdraw(QString amount)
 
         //myöhemmin tehdään vastauksen käsittely
 
-        if (response.contains("1")){
-                ui->stackedWidget->setCurrentWidget(ui->Endingpage);    }//Tässä otto menee läpi//
+        if (response.contains("1")){//Tässä otto menee läpi
+                ui->stackedWidget->setCurrentWidget(ui->Endingpage);
+                MoneyWndow* Money = new MoneyWndow(this);
+                Money->setGeometry((this->x()+500),(this->y()+500),530,280); //laitetaan raha ikkuna suhteessa bankautomat ikkunaan
+                connect(Money, &MoneyWndow::destroyed, this, &BankAutomat::gotologin);
+                Money->show();
+                Money->setNotes(amount);
 
+        }
 
-
-                else {
-                ui->withdrawLabelInfo->setText("Tilillä ei katetta");
+        else { ui->withdrawLabelInfo->setText("Tilillä ei katetta");}
 }
 
 
 
+void BankAutomat::gotologin(){
+    ui->stackedWidget->setCurrentWidget(ui->loginPage);
+    clearInfo();
 }
-
-bool BankAutomat::checkSum(QString sum){
-        return !(sum.toInt()%20); //true jos summa jaollinen 20
-}
-
-void BankAutomat::printMoney(QString sum)
-{
-//to-do
-}
-
 

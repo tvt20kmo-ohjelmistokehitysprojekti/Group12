@@ -20,13 +20,16 @@ SOURCES += \
     bankautomat2.cpp \
     bankautomat3.cpp \
     main.cpp \
-    bankautomat.cpp
+    bankautomat.cpp \
+    moneywndow.cpp
 
 HEADERS += \
-    bankautomat.h
+    bankautomat.h \
+    moneywndow.h
 
 FORMS += \
-    bankautomat.ui
+    bankautomat.ui \
+    moneywndow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
