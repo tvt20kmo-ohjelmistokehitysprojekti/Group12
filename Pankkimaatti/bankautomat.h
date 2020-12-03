@@ -39,10 +39,6 @@ public:
 
     void setLineEditValidation();
 
-    bool checkSum(QString sum);
-
-    void printMoney(QString sum);
-
 public slots:
     void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);
 
@@ -94,7 +90,6 @@ private:
 
     QString KorttiID;
     QString TiliID;
-
 
 
 };

@@ -15,11 +15,9 @@ BankAutomat::BankAutomat(QWidget *parent)
     connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
-    //this->setLineEditValidation();
+    this->setLineEditValidation();
     ui->frame->hide();
     ui->withdrawBtnOther->setCheckable("True");
-
-
 }
 
 BankAutomat::~BankAutomat()
@@ -117,7 +115,6 @@ void BankAutomat::CreditDebit(QString Tyyppi)
     }
 }
 
-
 //Valinta ikkuna
 void BankAutomat::on_ActionBtnOtto_clicked()
 {
@@ -129,8 +126,13 @@ void BankAutomat::on_TransactionBtnLopeta_clicked()
 {   gotologin();
 }
 void BankAutomat::on_saldoBtnLopeta_clicked()
-{   ui->stackedWidget->setCurrentWidget(ui->loginPage);
-    clearInfo();
+{   gotologin();
+}
+void BankAutomat::on_saldoBtnLopeta_3_clicked()
+{   gotologin();
+}
+void BankAutomat::on_saldoBtnLopeta_2_clicked()
+{ gotologin();
 }
 void BankAutomat::on_saldoBtnPalaa_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
@@ -207,6 +209,9 @@ void BankAutomat::clearInfo()
     ui->loginlineEditKorttiID->clear();
     ui->loginlineEditTunnusluku->clear();
     ui->loginLabelInfo->clear();
+    ui->withdrawlineEditAmount->clear();
+    ui->frame->hide();
+
 }
 
 void BankAutomat::setLineEditValidation(){
@@ -217,15 +222,3 @@ void BankAutomat::setLineEditValidation(){
 }
 
 
-
-
-
-void BankAutomat::on_saldoBtnLopeta_3_clicked()
-{
-    gotologin();
-}
-
-void BankAutomat::on_saldoBtnLopeta_2_clicked()
-{
-  gotologin();
-}
