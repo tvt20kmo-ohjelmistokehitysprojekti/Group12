@@ -42,6 +42,8 @@ public:
 public slots:
     void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);
 
+   void gotologin();
+
 private slots:
 
 
@@ -77,12 +79,17 @@ private slots:
 
     void on_TransactionBtnPalaa_clicked();
 
+    void on_withdrawBtnOther_clicked(bool checked);
+
+    void on_saldoBtnLopeta_3_clicked();
+
+    void on_saldoBtnLopeta_2_clicked();
+
 private:
     Ui::BankAutomat *ui;
 
     QString KorttiID;
     QString TiliID;
-
 
 
 };
