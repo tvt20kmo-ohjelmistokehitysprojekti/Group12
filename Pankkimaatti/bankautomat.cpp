@@ -204,7 +204,7 @@ void BankAutomat::clearInfo()
     this->setKorttiID("0");
     this->setTiliID("0");
     ui->loginlineEditKorttiID->clear();
-    ui->loginlineEditTunnusluku->clear();
+    ui->loginlineEditTunnusluku->setText("");
     ui->loginLabelInfo->clear();
 }
 

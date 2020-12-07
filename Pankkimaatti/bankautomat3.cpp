@@ -79,6 +79,7 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
 
 
 
+
            ui->transactionLabelDate->setText(date);
            ui->transactionLabelTransact->setText(transact);
            ui->transactionLabelSum->setText(sum);
