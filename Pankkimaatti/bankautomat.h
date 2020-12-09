@@ -39,6 +39,7 @@ public:
 
     void setLineEditValidation();
 
+    QString Saldo();
 public slots:
     void authRequired(QNetworkReply *Reply,QAuthenticator *Authenticator);
 
@@ -84,6 +85,7 @@ private slots:
     void on_saldoBtnLopeta_3_clicked();
 
     void on_saldoBtnLopeta_2_clicked();
+
 
 private:
     Ui::BankAutomat *ui;
