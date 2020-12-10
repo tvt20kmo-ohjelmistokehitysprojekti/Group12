@@ -168,7 +168,7 @@ void BankAutomat::on_saldoBtnLopeta_3_clicked()
 {   gotologin();
 }
 void BankAutomat::on_saldoBtnLopeta_2_clicked()
-{ gotologin();
+{   gotologin();
 }
 void BankAutomat::on_saldoBtnPalaa_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);

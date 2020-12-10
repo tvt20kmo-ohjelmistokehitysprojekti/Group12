@@ -11,7 +11,7 @@
  * void Money::setImg(int x)
  * //Sets image where image is note of value of x
  * void Money::setSubset(int sum){
- * // Creates sum subset from notes
+ * // Creates sum subset from notes **Must be made from notes 100,50,20
  * void Money::openNotes()
  * //Opens all moneys set in subset first note image to current window +diagonal offset
  *
@@ -69,7 +69,7 @@ void Money::setSubset(int sum){
     }
     for(int i = 0;i < 3 ;i++){
         if(sum>=notes[i]){
-            if(!(sum%notes[i]%20) || !(sum%notes[i]%50%20)){
+            if(!(sum%notes[i]%20) || !(sum%notes[i]%50%20)){//jos summasta jäävä jako jäänös voidaan muodostaa seuraavilla seteileillä
                 subset[i] = sum / notes[i];
                 sum = sum % notes[i];
             }
