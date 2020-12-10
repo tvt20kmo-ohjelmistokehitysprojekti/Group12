@@ -23,13 +23,13 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
 
     QByteArray response = this->getNetworkreply(json,"Login");
 
-    //Tarkistetaan vastauksen sisältö ja vertailaan
+    //Tarkistetaan vastauksen sisältö ja vertaillaan
     if(response.contains("true")){
 
         //Asetetaan KorttiID
         setKorttiID(KorttiID);
 
-        //Katsotaan onko käyttäjällä credit kortti jos on mennään credit debit valintaan muuten action valikkoon
+        //Katsotaan onko käyttäjällä credit kortti, jos on mennään credit-debit valintaan muuten action valikkoon
         json.insert("Tyyppi","Credit");
 
         response = this->getNetworkreply(json,"Fetch_account");
@@ -61,7 +61,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
     }
 }
 
-//Credit / Debit
+//Buttonit debitille ja creditille
 void BankAutomat::on_DebitCreditBtnCredit_clicked()
 {
     this->CreditDebit("Credit");
@@ -72,20 +72,20 @@ void BankAutomat::on_DebitCreditBtnDebit_clicked()
     this->CreditDebit("Debit");
 }
 
-//Valinta ikkuna
+//Toimintovalinta ikkuna
 void BankAutomat::on_ActionBtnOtto_clicked()
 {
-    ui->stackedWidget->setCurrentWidget(ui->withdrawpage);
+    ui->stackedWidget->setCurrentWidget(ui->withdrawpage); //siirrytään otto-sivulle
 }
 
 //Saldo
 void BankAutomat::on_ActionBtnSaldo_clicked()
 {
-    ui->stackedWidget->setCurrentWidget(ui->saldopage);
-    ui->saldoLabelTilinsaldo->setText(Saldo());
+    ui->stackedWidget->setCurrentWidget(ui->saldopage); //Siirrytään saldo-sivulle
+    ui->saldoLabelTilinsaldo->setText(Saldo()); //Näytetään tilin saldo
 }
 
-//Tapahtumat
+//Tapahtumat-buttonista päästään tarkastelemaan tilin tapahtumia
 void BankAutomat::on_ActionBtnTapahtumat_clicked()
 {
 
@@ -94,7 +94,7 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
     QJsonObject json;
        json.insert("idTili",getTiliID());
 
-    QByteArray response = this->getNetworkreply(json,"Tapahtumat");
+    QByteArray response = this->getNetworkreply(json,"Tapahtumat"); //Haetaan tapahtumat
 
     QJsonDocument json_doc = QJsonDocument::fromJson(response);
     QJsonObject jsobj = json_doc.object();
@@ -109,7 +109,7 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
         transact+=jsob["Selite"].toString()+"\n";
         sum+=jsob["Summa"].toString()+"\n";
     }
-
+     // Tulostetaan käyttöliittymään pvm, selite, summa ja saldo
      ui->transactionLabelDate->setText(date);
      ui->transactionLabelTransact->setText(transact);
      ui->transactionLabelSum->setText(sum);
@@ -120,7 +120,7 @@ void BankAutomat::on_ActionBtnTapahtumat_clicked()
 //Otto
 void BankAutomat::on_withdrawBtnOther_clicked(bool checked)
 {
-    if(checked){
+    if(checked){                //Näytetään muu summa valinta jos buttonia klikataan, muuten piilotetaan valinta
         ui->frame->show();
     }
     else

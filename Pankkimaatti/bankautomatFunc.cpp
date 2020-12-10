@@ -39,14 +39,14 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
     QNetworkRequest request(baseUrl.resolved(relative));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
-    //lähetetään post metoditlla ja otetaan vastaus
+    //lähetetään post metodilla ja otetaan vastaus
     QNetworkReply *reply = nam->post(request,QJsonDocument(json).toJson());
 
     //Odotetaan vastausta
     while(!reply->isFinished()){
         qApp->processEvents();
     }
-    //Otetaan vastuas talteen
+    //Otetaan vastaus talteen
     QByteArray result = reply->readAll();
 
     //Poistetaan reply
@@ -84,33 +84,38 @@ void BankAutomat::withdraw(QString amount)
 }
 
 
-
-QString BankAutomat::Saldo(){
+//Saldofunktio hakee saldotiedot
+QString BankAutomat::Saldo()
+{
     QJsonObject json;
-       json.insert("idTili",getTiliID());
+       json.insert("idTili",getTiliID()); //Haetaan tiedot tililtä
 
-   QByteArray response = getNetworkreply(json,"Saldo");
+   QByteArray response = getNetworkreply(json,"Saldo"); // Otetaan vastaus talteen
 
    QJsonDocument json_doc = QJsonDocument::fromJson(response);
    QJsonObject jsobj = json_doc.object();
 
    QString resp;
 
-   resp = jsobj["Saldo"].toString()+ " eur";
+   resp = jsobj["Saldo"].toString()+ " eur";    //Tulostetaan vastaus
 
     return resp;
 }
 
+
+//Funktio kortin tyypin valintaan
 void BankAutomat::CreditDebit(QString Tyyppi)
 {
     QString KorttiID = this->getKorttiID();
 
+    //Tehdään json tiedoista
     QJsonObject json;
     json.insert("Tyyppi",Tyyppi);
     json.insert("KorttiID",KorttiID);
 
     QByteArray response = this->getNetworkreply(json,"Fetch_account");
 
+    //Tarkistetaan vastauksen sisältö ja tehdään vertailua
     if (response.contains("false")){
         qDebug() <<"Jotain meni väärin";
     }
@@ -157,6 +162,8 @@ void BankAutomat::gotologin(){
     clearInfo();
 }
 
+
+//Poistetaan tiedot ettei ne näy seuraavalle käyttäjälle
 void BankAutomat::clearInfo()
 {
     this->setKorttiID("0");

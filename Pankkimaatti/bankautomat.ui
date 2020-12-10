@@ -625,7 +625,7 @@ background-color: rgb(10, 83, 255);</string>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;; colro:whtie;
+        <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;; color:white;
 </string>
        </property>
        <property name="text">
@@ -841,7 +841,7 @@ background-color: rgb(10, 83, 255);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">image: url(:/img/img/Pankkimaattikuva.png);
-widht:300px;
+width:300px;
 </string>
       </property>
       <property name="text">
