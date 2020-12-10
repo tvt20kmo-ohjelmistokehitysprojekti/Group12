@@ -39,7 +39,23 @@ class Pankki extends REST_Controller {
         $this->response($message, REST_Controller::HTTP_OK);
         }
     }
-    
+
+    public function Nostettavissa_post() 
+    {
+        $idTili = $this->post('idTili');
+
+        $message=$this->Pankki_model->Nostettavissa($idTili);  
+        if(!$message){
+            $this->response([
+                'status' => FALSE,
+                'message' => 'Bad Reguest'
+                ], REST_Controller::HTTP_BAD_REQUEST);
+        }
+        else{
+            $this->response($message, REST_Controller::HTTP_OK);
+        }
+        
+    }
     public function Saldo_post() //Hakee post metodilla lähetetyn tilin saldon ja palutaa sen.  
     {
         $idTili = $this->post('idTili');
