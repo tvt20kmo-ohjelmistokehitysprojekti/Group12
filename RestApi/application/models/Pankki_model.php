@@ -24,6 +24,24 @@ class Pankki_model extends CI_model
         }
     }
 
+        public function Nostettavissa($idTili)
+    {
+        $sql = 'select Luottoraja, Saldo from Tili where idTili=?';
+        $query = $this->db->query($sql,$idTili);
+        $result = $query->result_array();
+    
+        if (isset( $result[0]['Saldo'])){
+           $result = $result[0]['Saldo']-$result[0]['Luottoraja'];
+           $result = array('Nostettavissa'=>json_encode($result));
+        
+           
+           return $result;
+        }
+        else {
+            return false;
+        }
+    }
+
     public function Tapahtumat($idTili)
     {
         $sql = 'select Pvm, Selite, Summa from Tapahtumat where idTili =? order by Pvm desc limit 6';
