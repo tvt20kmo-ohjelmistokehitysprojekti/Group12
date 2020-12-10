@@ -17,18 +17,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Money.cpp \
     bankautomatBtn.cpp \
     bankautomatFunc.cpp \
-    main.cpp \
-    moneywndow.cpp
+    main.cpp
 
 HEADERS += \
-    bankautomat.h \
-    moneywndow.h
+    Money.h \
+    bankautomat.h
 
 FORMS += \
-    bankautomat.ui \
-    moneywndow.ui
+    Money.ui \
+    bankautomat.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

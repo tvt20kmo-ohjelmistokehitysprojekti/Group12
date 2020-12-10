@@ -1,9 +1,8 @@
 #include "bankautomat.h"
 #include "ui_bankautomat.h"
 #include <QString>
-#include <QtNetwork>
 #include <QDebug>
-#include <QIntValidator>
+
 
 
 // Login
@@ -176,6 +175,8 @@ void BankAutomat::on_saldoBtnPalaa_clicked()
 }
 void BankAutomat::on_withdrawBtnPaluu_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+    ui->withdrawBtnOther->click();
+    ui->withdrawLabelInfo->clear();
 }
 void BankAutomat::on_TransactionBtnPalaa_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
