@@ -150,6 +150,8 @@ void BankAutomat::clearInfo()
     ui->loginLabelInfo->clear();
     ui->withdrawlineEditAmount->clear();
     ui->frame->hide();
+    isCredit = false;
+    ui->saldoLabelNostettavissa->clear();
 }
 //LineEditValidation
 void BankAutomat::setLineEditValidation(){

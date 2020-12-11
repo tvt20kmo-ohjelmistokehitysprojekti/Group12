@@ -437,6 +437,19 @@ color: rgb(255, 255, 255);</string>
        <string>&lt;h1&gt;OttoMaatti&lt;/h1&gt;</string>
       </property>
      </widget>
+     <widget class="QLabel" name="saldoLabelNostettavissa">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>270</y>
+        <width>331</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="withdrawpage">
      <widget class="QPushButton" name="withdrawBtn20">
