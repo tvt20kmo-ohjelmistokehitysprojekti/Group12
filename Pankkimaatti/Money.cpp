@@ -15,8 +15,6 @@
  * void Money::openNotes()
  * //Opens all moneys set in subset first note image to current window +diagonal offset
  *
- *
- * --- **MA**
 */
 
 
