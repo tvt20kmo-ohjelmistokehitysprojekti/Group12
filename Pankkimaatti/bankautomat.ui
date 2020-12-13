@@ -703,7 +703,7 @@ background-color: rgb(10, 83, 255);</string>
        </rect>
       </property>
       <property name="text">
-       <string>01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;01.01.1990&lt;br&gt;</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="TransactionBtnLopeta">
@@ -764,7 +764,7 @@ background-color: rgb(10, 83, 255);</string>
        </rect>
       </property>
       <property name="text">
-       <string>90 euroa&lt;br&gt;90 euroa&lt;br&gt;90 euroa&lt;br&gt;90 euroa&lt;br&gt;</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -780,7 +780,7 @@ background-color: rgb(10, 83, 255);</string>
        </rect>
       </property>
       <property name="text">
-       <string>Pano&lt;br&gt;Pano&lt;br&gt;Pano&lt;br&gt;Pano&lt;br&gt;</string>
+       <string/>
       </property>
      </widget>
      <widget class="QLabel" name="TransactionLabelSaldo">
@@ -881,6 +881,30 @@ width:300px;
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>loginlineEditKorttiID</tabstop>
+  <tabstop>loginlineEditTunnusluku</tabstop>
+  <tabstop>loginBtnKirjaudu</tabstop>
+  <tabstop>DebitCreditBtnDebit</tabstop>
+  <tabstop>DebitCreditBtnCredit</tabstop>
+  <tabstop>ActionBtnOtto</tabstop>
+  <tabstop>ActionBtnSaldo</tabstop>
+  <tabstop>ActionBtnTapahtumat</tabstop>
+  <tabstop>saldoBtnLopeta_3</tabstop>
+  <tabstop>saldoBtnLopeta</tabstop>
+  <tabstop>saldoBtnPalaa</tabstop>
+  <tabstop>withdrawBtn20</tabstop>
+  <tabstop>withdrawBtn40</tabstop>
+  <tabstop>withdrawBtn50</tabstop>
+  <tabstop>withdrawBtn100</tabstop>
+  <tabstop>withdrawBtnPaluu</tabstop>
+  <tabstop>withdrawBtnOther</tabstop>
+  <tabstop>withdrawlineEditAmount</tabstop>
+  <tabstop>withdrawBtnOk</tabstop>
+  <tabstop>saldoBtnLopeta_2</tabstop>
+  <tabstop>TransactionBtnLopeta</tabstop>
+  <tabstop>TransactionBtnPalaa</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

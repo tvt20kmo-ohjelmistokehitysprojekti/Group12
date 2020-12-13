@@ -32,10 +32,8 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
     //ja Url polun joka yhdistetään baseurl. Eli esim "Otto"
     //Tehdään Qurl olio
     QUrl relative = url;
-    //Yhdistetään polku base urliin
-    QUrl urli = this->baseUrl.resolved(relative);
 
-    //Uusi request
+    //Uusi request //Yhdistetään polku base urliin
     QNetworkRequest request(baseUrl.resolved(relative));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -60,10 +58,9 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
 //Ottofunktio hakee rahat tililtä
 void BankAutomat::withdraw(QString amount)
 {
-    QString idTili = getTiliID();
 
     QJsonObject json;
-        json.insert("idTili", idTili);
+        json.insert("idTili", getTiliID());
         json.insert("Summa", amount);   //Lähetetään summa ja tili miltä nostetaan
 
         //Otetaan vastaus talteen
@@ -95,7 +92,7 @@ QString BankAutomat::Saldo()
 
    QString resp;
 
-   resp = jsobj["Saldo"].toString()+ " euroa";    //Tulostetaan vastaus
+   resp = jsobj["Saldo"].toString()+ " euroa";    //Kirjotetaan vastaus
 
     return resp;
 }
@@ -104,12 +101,11 @@ QString BankAutomat::Saldo()
 //Funktio kortin tyypin valintaan
 void BankAutomat::CreditDebit(QString Tyyppi)
 {
-    QString KorttiID = this->getKorttiID();
 
     //Tehdään json tiedoista
     QJsonObject json;
     json.insert("Tyyppi",Tyyppi);
-    json.insert("KorttiID",KorttiID);
+    json.insert("KorttiID",getKorttiID());
 
     QByteArray response = this->getNetworkreply(json,"Fetch_account");
 
