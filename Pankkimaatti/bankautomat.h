@@ -92,6 +92,7 @@ private:
 
     QString KorttiID;
     QString TiliID;
+    bool isCredit = false;
 
 
 };

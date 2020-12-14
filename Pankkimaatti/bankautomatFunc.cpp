@@ -2,7 +2,7 @@
 #include "ui_bankautomat.h"
 #include <QString>
 #include <QtNetwork>
-#include "moneywndow.h"
+#include "Money.h"
 #include <QDebug>
 #include <QIntValidator>
 
@@ -12,7 +12,7 @@ BankAutomat::BankAutomat(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired);
+    connect(nam, &QNetworkAccessManager::authenticationRequired, this, &BankAutomat::authRequired); //yhdistetään authentication
 
     baseUrl.setUrl("http://www.students.oamk.fi/~t9alma00/Group12/RestApi/index.php/Pankki/");
     this->setLineEditValidation();
@@ -32,10 +32,8 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
     //ja Url polun joka yhdistetään baseurl. Eli esim "Otto"
     //Tehdään Qurl olio
     QUrl relative = url;
-    //Yhdistetään polku base urliin
-    QUrl urli = this->baseUrl.resolved(relative);
 
-    //Uusi request
+    //Uusi request //Yhdistetään polku base urliin
     QNetworkRequest request(baseUrl.resolved(relative));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
 
@@ -60,44 +58,41 @@ QByteArray BankAutomat::getNetworkreply(QJsonObject json, QString url)
 //Ottofunktio hakee rahat tililtä
 void BankAutomat::withdraw(QString amount)
 {
-    QString idTili = getTiliID();
 
     QJsonObject json;
-        json.insert("idTili", idTili);
+        json.insert("idTili", getTiliID());
         json.insert("Summa", amount);   //Lähetetään summa ja tili miltä nostetaan
 
         //Otetaan vastaus talteen
         QByteArray response = this->getNetworkreply(json,"Otto");
 
-
-        if (response.contains("1")){//Tässä otto menee läpi
+        if (response.contains("viesti") && response.contains("1")){ //Otto menee läpi
                 ui->stackedWidget->setCurrentWidget(ui->Endingpage);
-                MoneyWndow* Money = new MoneyWndow(this);
-                Money->setGeometry((this->x()+500),(this->y()+500),530,280); //laitetaan raha ikkuna suhteessa bankautomat ikkunaan
-                connect(Money, &MoneyWndow::destroyed, this, &BankAutomat::gotologin);
-                Money->show();
-                Money->setNotes(amount);
-
+                Money* Notes = new Money(this);
+                Notes->setGeometry((this->x()+500),(this->y()+500),530,280); //laitetaan raha ikkuna suhteessa bankautomat ikkunaan
+                connect(Notes, &Money::destroyed, this, &BankAutomat::gotologin);//yhdistetään setelien sulkeminen gotologiniin
+                Notes->show();
+                Notes->setSubset(amount.toInt());
+                Notes->openNotes();
         }
-
-        else { ui->withdrawLabelInfo->setText("Tilillä ei katetta");}
+        else { ui->withdrawLabelInfo->setText("Tilillä ei katetta");
+        }
 }
-
 
 //Saldofunktio hakee saldotiedot
 QString BankAutomat::Saldo()
 {
     QJsonObject json;
-       json.insert("idTili",getTiliID()); //Haetaan tiedot tililtä
+       json.insert("idTili",getTiliID()); //Lähetetään idtili
 
-   QByteArray response = getNetworkreply(json,"Saldo"); // Otetaan vastaus talteen
+   QByteArray response = getNetworkreply(json,"Saldo"); //Haetaan ja otetaan vastaus talteen
 
    QJsonDocument json_doc = QJsonDocument::fromJson(response);
    QJsonObject jsobj = json_doc.object();
 
    QString resp;
 
-   resp = jsobj["Saldo"].toString()+ " eur";    //Tulostetaan vastaus
+   resp = jsobj["Saldo"].toString()+ " euroa";    //Kirjotetaan vastaus
 
     return resp;
 }
@@ -106,12 +101,11 @@ QString BankAutomat::Saldo()
 //Funktio kortin tyypin valintaan
 void BankAutomat::CreditDebit(QString Tyyppi)
 {
-    QString KorttiID = this->getKorttiID();
 
     //Tehdään json tiedoista
     QJsonObject json;
     json.insert("Tyyppi",Tyyppi);
-    json.insert("KorttiID",KorttiID);
+    json.insert("KorttiID",getKorttiID());
 
     QByteArray response = this->getNetworkreply(json,"Fetch_account");
 
@@ -129,17 +123,7 @@ void BankAutomat::CreditDebit(QString Tyyppi)
     }
 }
 
-//Muut
-QString BankAutomat::getTiliID() const
-{
-    return TiliID;
-}
-
-void BankAutomat::setTiliID(const QString &value)
-{
-    TiliID = value;
-}
-
+//Authentikaatio
 void BankAutomat::authRequired(QNetworkReply *Reply, QAuthenticator *Authenticator)
 {
     qDebug() << Reply->readAll();
@@ -147,21 +131,10 @@ void BankAutomat::authRequired(QNetworkReply *Reply, QAuthenticator *Authenticat
    Authenticator->setPassword("1212");
 }
 
-QString BankAutomat::getKorttiID() const
-{
-    return KorttiID;
-}
-
-void BankAutomat::setKorttiID(const QString &value)
-{
-    KorttiID = value;
-}
-
 void BankAutomat::gotologin(){
     ui->stackedWidget->setCurrentWidget(ui->loginPage);
     clearInfo();
 }
-
 
 //Poistetaan tiedot ettei ne näy seuraavalle käyttäjälle
 void BankAutomat::clearInfo()
@@ -173,13 +146,32 @@ void BankAutomat::clearInfo()
     ui->loginLabelInfo->clear();
     ui->withdrawlineEditAmount->clear();
     ui->frame->hide();
-
+    isCredit = false;
+    ui->saldoLabelNostettavissa->clear();
 }
-
+//LineEditValidation
 void BankAutomat::setLineEditValidation(){
     QIntValidator* validator = new QIntValidator(0,9999,this);
     ui->loginlineEditKorttiID->setValidator(validator);
     ui->loginlineEditTunnusluku->setValidator(validator);
     ui->withdrawlineEditAmount->setValidator(validator);
 }
+//Set & get
+QString BankAutomat::getTiliID() const
+{
+    return TiliID;
+}
 
+void BankAutomat::setTiliID(const QString &value)
+{
+    TiliID = value;
+}
+QString BankAutomat::getKorttiID() const
+{
+    return KorttiID;
+}
+
+void BankAutomat::setKorttiID(const QString &value)
+{
+    KorttiID = value;
+}

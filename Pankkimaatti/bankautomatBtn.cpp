@@ -1,9 +1,8 @@
 #include "bankautomat.h"
 #include "ui_bankautomat.h"
 #include <QString>
-#include <QtNetwork>
 #include <QDebug>
-#include <QIntValidator>
+
 
 
 // Login
@@ -65,6 +64,7 @@ void BankAutomat::on_loginBtnKirjaudu_clicked()
 void BankAutomat::on_DebitCreditBtnCredit_clicked()
 {
     this->CreditDebit("Credit");
+    isCredit = true;
 }
 
 void BankAutomat::on_DebitCreditBtnDebit_clicked()
@@ -83,6 +83,20 @@ void BankAutomat::on_ActionBtnSaldo_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->saldopage); //Siirrytään saldo-sivulle
     ui->saldoLabelTilinsaldo->setText(Saldo()); //Näytetään tilin saldo
+    if (isCredit){//Jos credit tili näytetään nostettavissa oleva summa
+        QJsonObject json;
+           json.insert("idTili",getTiliID());
+           QByteArray response = this->getNetworkreply(json,"Nostettavissa");
+
+           QJsonDocument json_doc = QJsonDocument::fromJson(response);
+           QJsonObject jsobj = json_doc.object();
+
+           QString amount;
+
+           amount ="Nostettavissa      "+ jsobj["Nostettavissa"].toString()+ " euroa";
+
+           ui->saldoLabelNostettavissa->setText(amount);
+    }
 }
 
 //Tapahtumat-buttonista päästään tarkastelemaan tilin tapahtumia
@@ -169,13 +183,15 @@ void BankAutomat::on_saldoBtnLopeta_3_clicked()
 {   gotologin();
 }
 void BankAutomat::on_saldoBtnLopeta_2_clicked()
-{ gotologin();
+{   gotologin();
 }
 void BankAutomat::on_saldoBtnPalaa_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
 }
 void BankAutomat::on_withdrawBtnPaluu_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);
+    ui->withdrawBtnOther->click();
+    ui->withdrawLabelInfo->clear();
 }
 void BankAutomat::on_TransactionBtnPalaa_clicked()
 {   ui->stackedWidget->setCurrentWidget(ui->Actionpage);

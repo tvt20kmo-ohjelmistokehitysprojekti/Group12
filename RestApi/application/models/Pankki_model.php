@@ -24,7 +24,7 @@ class Pankki_model extends CI_model
         }
     }
 
-        public function Nostettavissa($idTili)
+    public function Nostettavissa($idTili)
     {
         $sql = 'select Luottoraja, Saldo from Tili where idTili=?';
         $query = $this->db->query($sql,$idTili);
